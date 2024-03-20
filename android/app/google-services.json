@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "64674815816",
+    "project_id": "hawlna-5ec01",
+    "storage_bucket": "hawlna-5ec01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64674815816:android:a4ceb0eab083e0fffe5d7d",
+        "android_client_info": {
+          "package_name": "com.mycompany.hawlna"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDEccBNoZS_j5Vrxjezjwste4l5FsDhKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
