@@ -84,7 +84,10 @@ class _ReviPageWidgetState extends State<ReviPageWidget> {
                       BoxShadow(
                         blurRadius: 3.0,
                         color: Color(0x39000000),
-                        offset: Offset(0.0, 1.0),
+                        offset: Offset(
+                          0.0,
+                          1.0,
+                        ),
                       )
                     ],
                   ),
@@ -101,9 +104,18 @@ class _ReviPageWidgetState extends State<ReviPageWidget> {
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'write your review...',
-                            labelStyle:
-                                FlutterFlowTheme.of(context).labelMedium,
-                            hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -133,7 +145,11 @@ class _ReviPageWidgetState extends State<ReviPageWidget> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
-                          style: FlutterFlowTheme.of(context).bodyMedium,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                           validator: _model.textControllerValidator
                               .asValidator(context),
                         ),
@@ -189,6 +205,7 @@ class _ReviPageWidgetState extends State<ReviPageWidget> {
                                         .override(
                                           fontFamily: 'Readex Pro',
                                           color: Colors.white,
+                                          letterSpacing: 0.0,
                                         ),
                                     elevation: 3.0,
                                     borderSide: const BorderSide(
@@ -277,6 +294,7 @@ class _ReviPageWidgetState extends State<ReviPageWidget> {
                                                     fontFamily: 'Outfit',
                                                     color: const Color(0xFF14181B),
                                                     fontSize: 22.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ),
@@ -318,6 +336,7 @@ class _ReviPageWidgetState extends State<ReviPageWidget> {
                                                       'Plus Jakarta Sans',
                                                   color: const Color(0xFF57636C),
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),

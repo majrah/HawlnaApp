@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/components/booking_page_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -119,6 +120,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                 fontFamily: 'Outfit',
                                 color: const Color(0xFF15161E),
                                 fontSize: 36.0,
+                                letterSpacing: 0.0,
                                 fontWeight: FontWeight.w600,
                               ),
                         ),
@@ -136,6 +138,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                   fontFamily: 'Outfit',
                                   color: const Color(0xFF606A85),
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
@@ -214,6 +217,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                                         'Plus Jakarta Sans',
                                                     color: const Color(0xFF15161E),
                                                     fontSize: 16.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                             ),
@@ -264,6 +268,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                           fontFamily: 'Plus Jakarta Sans',
                                           color: const Color(0xFF15161E),
                                           fontSize: 16.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                     elevation: 0.0,
@@ -294,6 +299,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                           fontFamily: 'Plus Jakarta Sans',
                                           color: Colors.white,
                                           fontSize: 16.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
                                         ),
                                     elevation: 3.0,
@@ -359,20 +365,33 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
-                                          context.pushNamed(
-                                            'Booking',
-                                            queryParameters: {
-                                              'server': serializeParam(
-                                                listViewServicesRecord
-                                                    .servicesName,
-                                                ParamType.String,
-                                              ),
-                                              'providerRef': serializeParam(
-                                                widget.providerName,
-                                                ParamType.String,
-                                              ),
-                                            }.withoutNulls,
-                                          );
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            enableDrag: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return GestureDetector(
+                                                onTap: () => _model.unfocusNode
+                                                        .canRequestFocus
+                                                    ? FocusScope.of(context)
+                                                        .requestFocus(
+                                                            _model.unfocusNode)
+                                                    : FocusScope.of(context)
+                                                        .unfocus(),
+                                                child: Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: const BookingPageWidget(
+                                                    parameter1: '',
+                                                    parameter2: '',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ).then(
+                                              (value) => safeSetState(() {}));
                                         },
                                         child: Container(
                                           width: double.infinity,
@@ -382,7 +401,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                               BoxShadow(
                                                 blurRadius: 3.0,
                                                 color: Color(0x411D2429),
-                                                offset: Offset(0.0, 1.0),
+                                                offset: Offset(
+                                                  0.0,
+                                                  1.0,
+                                                ),
                                               )
                                             ],
                                             borderRadius:
@@ -405,7 +427,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                                         BorderRadius.circular(
                                                             6.0),
                                                     child: Image.network(
-                                                      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80',
+                                                      listViewServicesRecord
+                                                          .img,
                                                       width: 80.0,
                                                       height: 80.0,
                                                       fit: BoxFit.cover,
@@ -444,6 +467,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                                                 color: const Color(
                                                                     0xFF0F1113),
                                                                 fontSize: 20.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .normal,
@@ -504,6 +529,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                                               color: const Color(
                                                                   0xFF0F1113),
                                                               fontSize: 14.0,
+                                                              letterSpacing:
+                                                                  0.0,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,

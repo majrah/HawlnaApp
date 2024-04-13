@@ -26,11 +26,6 @@ class ServicesRecord extends FirestoreRecord {
   String get description => _description ?? '';
   bool hasDescription() => _description != null;
 
-  // "price" field.
-  double? _price;
-  double get price => _price ?? 0.0;
-  bool hasPrice() => _price != null;
-
   // "providerRef" field.
   String? _providerRef;
   String get providerRef => _providerRef ?? '';
@@ -46,13 +41,18 @@ class ServicesRecord extends FirestoreRecord {
   String get img => _img ?? '';
   bool hasImg() => _img != null;
 
+  // "price" field.
+  int? _price;
+  int get price => _price ?? 0;
+  bool hasPrice() => _price != null;
+
   void _initializeFields() {
     _servicesID = castToType<int>(snapshotData['servicesID']);
     _description = snapshotData['description'] as String?;
-    _price = castToType<double>(snapshotData['price']);
     _providerRef = snapshotData['providerRef'] as String?;
     _servicesName = snapshotData['servicesName'] as String?;
     _img = snapshotData['img'] as String?;
+    _price = castToType<int>(snapshotData['price']);
   }
 
   static CollectionReference get collection =>
@@ -92,19 +92,19 @@ class ServicesRecord extends FirestoreRecord {
 Map<String, dynamic> createServicesRecordData({
   int? servicesID,
   String? description,
-  double? price,
   String? providerRef,
   String? servicesName,
   String? img,
+  int? price,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'servicesID': servicesID,
       'description': description,
-      'price': price,
       'providerRef': providerRef,
       'servicesName': servicesName,
       'img': img,
+      'price': price,
     }.withoutNulls,
   );
 
@@ -118,20 +118,20 @@ class ServicesRecordDocumentEquality implements Equality<ServicesRecord> {
   bool equals(ServicesRecord? e1, ServicesRecord? e2) {
     return e1?.servicesID == e2?.servicesID &&
         e1?.description == e2?.description &&
-        e1?.price == e2?.price &&
         e1?.providerRef == e2?.providerRef &&
         e1?.servicesName == e2?.servicesName &&
-        e1?.img == e2?.img;
+        e1?.img == e2?.img &&
+        e1?.price == e2?.price;
   }
 
   @override
   int hash(ServicesRecord? e) => const ListEquality().hash([
         e?.servicesID,
         e?.description,
-        e?.price,
         e?.providerRef,
         e?.servicesName,
-        e?.img
+        e?.img,
+        e?.price
       ]);
 
   @override

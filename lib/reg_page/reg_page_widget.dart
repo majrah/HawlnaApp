@@ -26,18 +26,18 @@ class _RegPageWidgetState extends State<RegPageWidget>
     'columnOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
-        VisibilityEffect(duration: 300.ms),
+        VisibilityEffect(duration: 1.ms),
         FadeEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 400.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: 0.0,
           end: 1.0,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 400.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.0, 20.0),
           end: const Offset(0.0, 0.0),
         ),
@@ -97,6 +97,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Ubuntu',
                               fontSize: 29.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
                             ),
                       ),
@@ -124,6 +125,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                                   fontFamily: 'Plus Jakarta Sans',
                                   color: const Color(0xFF57636C),
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                       ),
@@ -141,7 +143,12 @@ class _RegPageWidgetState extends State<RegPageWidget>
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Name',
-                            labelStyle: FlutterFlowTheme.of(context).labelLarge,
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .labelLarge
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
                             alignLabelWithHint: false,
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
@@ -179,6 +186,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                               FlutterFlowTheme.of(context).bodyLarge.override(
                                     fontFamily: 'Readex Pro',
                                     color: Colors.black,
+                                    letterSpacing: 0.0,
                                   ),
                           keyboardType: TextInputType.emailAddress,
                           validator: _model.userNameControllerValidator
@@ -199,7 +207,12 @@ class _RegPageWidgetState extends State<RegPageWidget>
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Email',
-                            labelStyle: FlutterFlowTheme.of(context).labelLarge,
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .labelLarge
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
                             alignLabelWithHint: false,
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
@@ -237,6 +250,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                               FlutterFlowTheme.of(context).bodyLarge.override(
                                     fontFamily: 'Readex Pro',
                                     color: Colors.black,
+                                    letterSpacing: 0.0,
                                   ),
                           keyboardType: TextInputType.emailAddress,
                           validator: _model.emailAddressControllerValidator
@@ -257,8 +271,12 @@ class _RegPageWidgetState extends State<RegPageWidget>
                           obscureText: !_model.passwordVisibility,
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            labelStyle:
-                                FlutterFlowTheme.of(context).labelMedium,
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Color(0xFFE0E3E7),
@@ -309,6 +327,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                               FlutterFlowTheme.of(context).bodyLarge.override(
                                     fontFamily: 'Readex Pro',
                                     color: Colors.black,
+                                    letterSpacing: 0.0,
                                   ),
                           validator: _model.passwordControllerValidator
                               .asValidator(context),
@@ -328,8 +347,12 @@ class _RegPageWidgetState extends State<RegPageWidget>
                           obscureText: !_model.confirmPasswordVisibility,
                           decoration: InputDecoration(
                             labelText: 'Cinferm Password',
-                            labelStyle:
-                                FlutterFlowTheme.of(context).labelMedium,
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Color(0xFFE0E3E7),
@@ -380,6 +403,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                               FlutterFlowTheme.of(context).bodyLarge.override(
                                     fontFamily: 'Readex Pro',
                                     color: Colors.black,
+                                    letterSpacing: 0.0,
                                   ),
                           validator: _model.confirmPasswordControllerValidator
                               .asValidator(context),
@@ -428,7 +452,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                                       'https://shaynakit.com/storage/assets/cover_project/Zu3H1Mt93BWRTJ3WexcenMRv77DVmxk4DIlyUTfF.png',
                                 ));
 
-                            context.goNamedAuth('ProfilePage', context.mounted);
+                            context.goNamedAuth('homePage', context.mounted);
                           },
                           text: 'Get Started',
                           options: FFButtonOptions(
@@ -445,6 +469,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                                   fontFamily: 'Plus Jakarta Sans',
                                   color: Colors.white,
                                   fontSize: 16.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                             elevation: 7.0,
@@ -483,6 +508,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
                                   fontSize: 16.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                             elevation: 3.0,

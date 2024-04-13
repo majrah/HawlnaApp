@@ -41,12 +41,18 @@ class CartRecord extends FirestoreRecord {
   String get user => _user ?? '';
   bool hasUser() => _user != null;
 
+  // "PaymentType" field.
+  String? _paymentType;
+  String get paymentType => _paymentType ?? '';
+  bool hasPaymentType() => _paymentType != null;
+
   void _initializeFields() {
     _cartID = castToType<int>(snapshotData['cartID']);
     _cartItems = getDataList(snapshotData['cartItems']);
     _total = castToType<double>(snapshotData['total']);
     _providerRef = snapshotData['providerRef'] as String?;
     _user = snapshotData['user'] as String?;
+    _paymentType = snapshotData['PaymentType'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -87,6 +93,7 @@ Map<String, dynamic> createCartRecordData({
   double? total,
   String? providerRef,
   String? user,
+  String? paymentType,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -94,6 +101,7 @@ Map<String, dynamic> createCartRecordData({
       'total': total,
       'providerRef': providerRef,
       'user': user,
+      'PaymentType': paymentType,
     }.withoutNulls,
   );
 
@@ -110,12 +118,19 @@ class CartRecordDocumentEquality implements Equality<CartRecord> {
         listEquality.equals(e1?.cartItems, e2?.cartItems) &&
         e1?.total == e2?.total &&
         e1?.providerRef == e2?.providerRef &&
-        e1?.user == e2?.user;
+        e1?.user == e2?.user &&
+        e1?.paymentType == e2?.paymentType;
   }
 
   @override
-  int hash(CartRecord? e) => const ListEquality()
-      .hash([e?.cartID, e?.cartItems, e?.total, e?.providerRef, e?.user]);
+  int hash(CartRecord? e) => const ListEquality().hash([
+        e?.cartID,
+        e?.cartItems,
+        e?.total,
+        e?.providerRef,
+        e?.user,
+        e?.paymentType
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is CartRecord;

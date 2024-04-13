@@ -97,6 +97,36 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                             context.pushNamed('homePage');
                           },
                         ),
+                        Align(
+                          alignment: const AlignmentDirectional(1.0, 0.0),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                280.0, 0.0, 0.0, 0.0),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed(
+                                  'Purches',
+                                  queryParameters: {
+                                    'provider': serializeParam(
+                                      widget.providerRef,
+                                      ParamType.String,
+                                    ),
+                                  }.withoutNulls,
+                                );
+                              },
+                              child: Icon(
+                                Icons.shopping_bag_outlined,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 40.0,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -119,6 +149,7 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                 fontFamily: 'Outfit',
                                 color: const Color(0xFF15161E),
                                 fontSize: 36.0,
+                                letterSpacing: 0.0,
                                 fontWeight: FontWeight.w600,
                               ),
                         ),
@@ -136,6 +167,7 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                   fontFamily: 'Outfit',
                                   color: const Color(0xFF606A85),
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
@@ -214,6 +246,7 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                                         'Plus Jakarta Sans',
                                                     color: const Color(0xFF15161E),
                                                     fontSize: 16.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                             ),
@@ -264,6 +297,7 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                           fontFamily: 'Plus Jakarta Sans',
                                           color: const Color(0xFF15161E),
                                           fontSize: 16.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                     elevation: 0.0,
@@ -306,6 +340,7 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                           fontFamily: 'Plus Jakarta Sans',
                                           color: Colors.white,
                                           fontSize: 16.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
                                         ),
                                     elevation: 3.0,
@@ -373,7 +408,10 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                             BoxShadow(
                                               blurRadius: 3.0,
                                               color: Color(0x411D2429),
-                                              offset: Offset(0.0, 1.0),
+                                              offset: Offset(
+                                                0.0,
+                                                1.0,
+                                              ),
                                             )
                                           ],
                                           borderRadius:
@@ -396,7 +434,7 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                                       BorderRadius.circular(
                                                           6.0),
                                                   child: Image.network(
-                                                    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80',
+                                                    listViewServicesRecord.img,
                                                     width: 80.0,
                                                     height: 80.0,
                                                     fit: BoxFit.cover,
@@ -430,6 +468,8 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                                               color: const Color(
                                                                   0xFF0F1113),
                                                               fontSize: 20.0,
+                                                              letterSpacing:
+                                                                  0.0,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .normal,
@@ -447,16 +487,61 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.end,
                                                 children: [
-                                                  const Padding(
+                                                  Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 4.0,
                                                                 0.0, 0.0),
-                                                    child: Icon(
-                                                      Icons
-                                                          .shopping_basket_outlined,
-                                                      color: Color(0xFF57636C),
-                                                      size: 24.0,
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        setState(() {
+                                                          FFAppState().addToMyCart(
+                                                              listViewServicesRecord
+                                                                  .reference);
+                                                          FFAppState()
+                                                              .cartsum = FFAppState()
+                                                                  .cartsum +
+                                                              listViewServicesRecord
+                                                                  .price
+                                                                  .toDouble();
+                                                        });
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Added To The Cart',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                              ),
+                                                            ),
+                                                            duration: const Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondary,
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: const Icon(
+                                                        Icons
+                                                            .shopping_basket_outlined,
+                                                        color:
+                                                            Color(0xFF57636C),
+                                                        size: 24.0,
+                                                      ),
                                                     ),
                                                   ),
                                                   Padding(
@@ -481,6 +566,7 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                                             color: const Color(
                                                                 0xFF0F1113),
                                                             fontSize: 14.0,
+                                                            letterSpacing: 0.0,
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                           ),

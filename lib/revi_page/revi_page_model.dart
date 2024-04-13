@@ -12,8 +12,6 @@ class ReviPageModel extends FlutterFlowModel<ReviPageWidget> {
   // State field(s) for RatingBar widget.
   double? ratingBarValue1;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
@@ -22,8 +20,4 @@ class ReviPageModel extends FlutterFlowModel<ReviPageWidget> {
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

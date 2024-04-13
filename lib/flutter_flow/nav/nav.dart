@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -109,54 +110,101 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'service',
           path: '/service',
           builder: (context, params) => ServiceWidget(
-            providerName: params.getParam('providerName', ParamType.String),
-            providerDesc: params.getParam('providerDesc', ParamType.String),
-          ),
-        ),
-        FFRoute(
-          name: 'Booking',
-          path: '/booking',
-          builder: (context, params) => BookingWidget(
-            server: params.getParam('server', ParamType.String),
-            providerRef: params.getParam('providerRef', ParamType.String),
+            providerName: params.getParam(
+              'providerName',
+              ParamType.String,
+            ),
+            providerDesc: params.getParam(
+              'providerDesc',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
           name: 'Communitychat',
           path: '/communitychat',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'Communitychat')
-              : const CommunitychatWidget(),
+          builder: (context, params) => CommunitychatWidget(
+            postID: params.getParam(
+              'postID',
+              ParamType.int,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Purches',
           path: '/purches',
-          builder: (context, params) => const PurchesWidget(),
+          builder: (context, params) => PurchesWidget(
+            provider: params.getParam(
+              'provider',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Srvice2',
           path: '/srvice2',
           builder: (context, params) => Srvice2Widget(
-            providerRef: params.getParam('providerRef', ParamType.String),
-            providerDesc: params.getParam('providerDesc', ParamType.String),
+            providerRef: params.getParam(
+              'providerRef',
+              ParamType.String,
+            ),
+            providerDesc: params.getParam(
+              'providerDesc',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
           name: 'DirectMessage',
           path: '/directMessage',
-          builder: (context, params) => const DirectMessageWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'DirectMessage')
+              : const DirectMessageWidget(),
         ),
         FFRoute(
           name: 'reviPage',
           path: '/reviPage',
           builder: (context, params) => ReviPageWidget(
-            providerRef: params.getParam('providerRef', ParamType.String),
+            providerRef: params.getParam(
+              'providerRef',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
           name: 'AppointPage',
           path: '/appointPage',
           builder: (context, params) => const AppointPageWidget(),
+        ),
+        FFRoute(
+          name: 'chatPage',
+          path: '/chatPage',
+          asyncParams: {
+            'chatUser': getDoc(['users'], UsersRecord.fromSnapshot),
+          },
+          builder: (context, params) => ChatPageWidget(
+            chatUser: params.getParam(
+              'chatUser',
+              ParamType.Document,
+            ),
+            chatRef: params.getParam(
+              'chatRef',
+              ParamType.DocumentReference,
+              false,
+              ['chats'],
+            ),
+            provider: params.getParam(
+              'provider',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'PostsPage',
+          path: '/postsPage',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'PostsPage')
+              : const PostsPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -289,8 +337,12 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList,
-        collectionNamePath: collectionNamePath);
+    return deserializeParam<T>(
+      param,
+      type,
+      isList,
+      collectionNamePath: collectionNamePath,
+    );
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,9 +9,7 @@ import 'auth/firebase_auth/auth_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
-import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
 void main() async {
@@ -18,7 +17,13 @@ void main() async {
   usePathUrlStrategy();
   await initFirebase();
 
-  runApp(const MyApp());
+  final appState = FFAppState(); // Initialize FFAppState
+  await appState.initializePersistedState();
+
+  runApp(ChangeNotifierProvider(
+    create: (context) => appState,
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -100,7 +105,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'ProfilePage';
+  String _currentPageName = 'homePage';
   late Widget? _currentPage;
 
   @override
@@ -114,8 +119,9 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'homePage': const HomePageWidget(),
+      'PostsPage': const PostsPageWidget(),
       'ProfilePage': const ProfilePageWidget(),
-      'Communitychat': const CommunitychatWidget(),
+      'DirectMessage': const DirectMessageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -138,9 +144,9 @@ class _NavBarPageState extends State<NavBarPage> {
         selectedItemColor: const Color(0xCC3B6B9A),
         unselectedItemColor: FlutterFlowTheme.of(context).primaryText,
         selectedBackgroundColor: const Color(0x00000000),
-        borderRadius: 8.0,
+        borderRadius: 30.0,
         itemBorderRadius: 8.0,
-        margin: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+        margin: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
         padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
         width: double.infinity,
         elevation: 0.0,
@@ -174,14 +180,14 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.person,
+                  Icons.forum_outlined,
                   color: currentIndex == 1
                       ? const Color(0xCC3B6B9A)
                       : FlutterFlowTheme.of(context).primaryText,
                   size: 24.0,
                 ),
                 Text(
-                  'Ptofile',
+                  'Community',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1
@@ -198,17 +204,41 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  FontAwesomeIcons.comments,
+                  Icons.person,
                   color: currentIndex == 2
                       ? const Color(0xCC3B6B9A)
                       : FlutterFlowTheme.of(context).primaryText,
                   size: 24.0,
                 ),
                 Text(
-                  'Community',
+                  'Ptofile',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 2
+                        ? const Color(0xCC3B6B9A)
+                        : FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 11.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.textsms,
+                  color: currentIndex == 3
+                      ? const Color(0xCC3B6B9A)
+                      : FlutterFlowTheme.of(context).primaryText,
+                  size: 24.0,
+                ),
+                Text(
+                  'Messages',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: currentIndex == 3
                         ? const Color(0xCC3B6B9A)
                         : FlutterFlowTheme.of(context).primaryText,
                     fontSize: 11.0,

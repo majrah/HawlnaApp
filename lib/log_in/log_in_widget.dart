@@ -89,6 +89,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                     fontFamily: 'Plus Jakarta Sans',
                                     color: const Color(0xFF101213),
                                     fontSize: 36.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),
@@ -110,6 +111,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                         fontFamily: 'Plus Jakarta Sans',
                                         color: const Color(0xFF101213),
                                         fontSize: 36.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w600,
                                       ),
                                 ),
@@ -132,6 +134,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                               fontFamily: 'Plus Jakarta Sans',
                                               color: const Color(0xFF57636C),
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                         enabledBorder: OutlineInputBorder(
@@ -175,6 +178,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: const Color(0xFF101213),
                                             fontSize: 14.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                       keyboardType: TextInputType.emailAddress,
@@ -203,6 +207,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                               fontFamily: 'Plus Jakarta Sans',
                                               color: const Color(0xFF57636C),
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                         enabledBorder: OutlineInputBorder(
@@ -261,6 +266,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: const Color(0xFF101213),
                                             fontSize: 14.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                       validator: _model
@@ -287,7 +293,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                       }
 
                                       context.goNamedAuth(
-                                          'ProfilePage', context.mounted);
+                                          'homePage', context.mounted);
                                     },
                                     text: 'Sign In',
                                     options: FFButtonOptions(
@@ -305,6 +311,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: Colors.white,
                                             fontSize: 16.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                       elevation: 3.0,
@@ -347,6 +354,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                                       'Plus Jakarta Sans',
                                                   color: const Color(0xFF4B39EF),
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           )
@@ -357,6 +365,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                               fontFamily: 'Plus Jakarta Sans',
                                               color: const Color(0xFF101213),
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),

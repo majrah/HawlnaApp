@@ -1,4 +1,5 @@
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'purches_widget.dart' show PurchesWidget;
 import 'package:flutter/material.dart';
 
@@ -6,8 +7,9 @@ class PurchesModel extends FlutterFlowModel<PurchesWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-
-  /// Initialization and disposal methods.
+  // State field(s) for DropDown widget.
+  String? dropDownValue;
+  FormFieldController<String>? dropDownValueController;
 
   @override
   void initState(BuildContext context) {}
@@ -16,8 +18,4 @@ class PurchesModel extends FlutterFlowModel<PurchesWidget> {
   void dispose() {
     unfocusNode.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }
