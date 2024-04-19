@@ -27,33 +27,34 @@ class _CommunitychatWidgetState extends State<CommunitychatWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'listViewOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, 80.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => CommunitychatModel());
 
+    animationsMap.addAll({
+      'listViewOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 80.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
     setupAnimations(
       animationsMap.values.where((anim) =>
           anim.trigger == AnimationTrigger.onActionTrigger ||
@@ -280,6 +281,8 @@ class _CommunitychatWidgetState extends State<CommunitychatWidget>
                                             .bodyLarge
                                             .override(
                                               fontFamily: 'Readex Pro',
+                                              color: const Color(0xD4399ED2),
+                                              fontSize: 12.0,
                                               letterSpacing: 0.0,
                                             ),
                                       ),
@@ -297,6 +300,7 @@ class _CommunitychatWidgetState extends State<CommunitychatWidget>
                                             .labelSmall
                                             .override(
                                               fontFamily: 'Readex Pro',
+                                              fontSize: 14.0,
                                               letterSpacing: 0.0,
                                             ),
                                       ),
@@ -312,7 +316,7 @@ class _CommunitychatWidgetState extends State<CommunitychatWidget>
                                           child: Image.network(
                                             valueOrDefault<String>(
                                               materialCard1UserPostsRecord
-                                                  .photo,
+                                                  .photoURL,
                                               '.',
                                             ),
                                             width: 300.0,

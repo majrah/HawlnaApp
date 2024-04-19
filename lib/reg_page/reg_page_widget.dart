@@ -22,45 +22,47 @@ class _RegPageWidgetState extends State<RegPageWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'columnOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, 20.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => RegPageModel());
 
-    _model.userNameController ??= TextEditingController();
+    _model.userNameTextController ??= TextEditingController();
     _model.userNameFocusNode ??= FocusNode();
 
-    _model.emailAddressController ??= TextEditingController();
+    _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
-    _model.passwordController ??= TextEditingController();
+    _model.passwordTextController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
 
-    _model.confirmPasswordController ??= TextEditingController();
+    _model.confirmPasswordTextController ??= TextEditingController();
     _model.confirmPasswordFocusNode ??= FocusNode();
+
+    animationsMap.addAll({
+      'columnOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 300.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 400.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 400.0.ms,
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -136,7 +138,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                       child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
-                          controller: _model.userNameController,
+                          controller: _model.userNameTextController,
                           focusNode: _model.userNameFocusNode,
                           autofocus: true,
                           autofillHints: const [AutofillHints.name],
@@ -189,7 +191,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                                     letterSpacing: 0.0,
                                   ),
                           keyboardType: TextInputType.emailAddress,
-                          validator: _model.userNameControllerValidator
+                          validator: _model.userNameTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -200,7 +202,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                       child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
-                          controller: _model.emailAddressController,
+                          controller: _model.emailAddressTextController,
                           focusNode: _model.emailAddressFocusNode,
                           autofocus: true,
                           autofillHints: const [AutofillHints.email],
@@ -253,7 +255,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                                     letterSpacing: 0.0,
                                   ),
                           keyboardType: TextInputType.emailAddress,
-                          validator: _model.emailAddressControllerValidator
+                          validator: _model.emailAddressTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -264,7 +266,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                       child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
-                          controller: _model.passwordController,
+                          controller: _model.passwordTextController,
                           focusNode: _model.passwordFocusNode,
                           autofocus: true,
                           autofillHints: const [AutofillHints.password],
@@ -329,7 +331,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                                     color: Colors.black,
                                     letterSpacing: 0.0,
                                   ),
-                          validator: _model.passwordControllerValidator
+                          validator: _model.passwordTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -340,7 +342,7 @@ class _RegPageWidgetState extends State<RegPageWidget>
                       child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
-                          controller: _model.confirmPasswordController,
+                          controller: _model.confirmPasswordTextController,
                           focusNode: _model.confirmPasswordFocusNode,
                           autofocus: true,
                           autofillHints: const [AutofillHints.password],
@@ -405,7 +407,8 @@ class _RegPageWidgetState extends State<RegPageWidget>
                                     color: Colors.black,
                                     letterSpacing: 0.0,
                                   ),
-                          validator: _model.confirmPasswordControllerValidator
+                          validator: _model
+                              .confirmPasswordTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -418,8 +421,8 @@ class _RegPageWidgetState extends State<RegPageWidget>
                         child: FFButtonWidget(
                           onPressed: () async {
                             GoRouter.of(context).prepareAuthEvent();
-                            if (_model.passwordController.text !=
-                                _model.confirmPasswordController.text) {
+                            if (_model.passwordTextController.text !=
+                                _model.confirmPasswordTextController.text) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text(
@@ -433,8 +436,8 @@ class _RegPageWidgetState extends State<RegPageWidget>
                             final user =
                                 await authManager.createAccountWithEmail(
                               context,
-                              _model.emailAddressController.text,
-                              _model.passwordController.text,
+                              _model.emailAddressTextController.text,
+                              _model.passwordTextController.text,
                             );
                             if (user == null) {
                               return;
@@ -443,11 +446,12 @@ class _RegPageWidgetState extends State<RegPageWidget>
                             await UsersRecord.collection
                                 .doc(user.uid)
                                 .update(createUsersRecordData(
-                                  email: _model.emailAddressController.text,
-                                  password: _model.passwordController.text,
+                                  email: _model.emailAddressTextController.text,
+                                  password: _model.passwordTextController.text,
                                   confirmPassword:
-                                      _model.confirmPasswordController.text,
-                                  displayName: _model.userNameController.text,
+                                      _model.confirmPasswordTextController.text,
+                                  displayName:
+                                      _model.userNameTextController.text,
                                   photoUrl:
                                       'https://shaynakit.com/storage/assets/cover_project/Zu3H1Mt93BWRTJ3WexcenMRv77DVmxk4DIlyUTfF.png',
                                 ));

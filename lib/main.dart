@@ -14,6 +14,7 @@ import 'index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
   await initFirebase();
 
@@ -121,7 +122,6 @@ class _NavBarPageState extends State<NavBarPage> {
       'homePage': const HomePageWidget(),
       'PostsPage': const PostsPageWidget(),
       'ProfilePage': const ProfilePageWidget(),
-      'DirectMessage': const DirectMessageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -215,30 +215,6 @@ class _NavBarPageState extends State<NavBarPage> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 2
-                        ? const Color(0xCC3B6B9A)
-                        : FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.textsms,
-                  color: currentIndex == 3
-                      ? const Color(0xCC3B6B9A)
-                      : FlutterFlowTheme.of(context).primaryText,
-                  size: 24.0,
-                ),
-                Text(
-                  'Messages',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 3
                         ? const Color(0xCC3B6B9A)
                         : FlutterFlowTheme.of(context).primaryText,
                     fontSize: 11.0,

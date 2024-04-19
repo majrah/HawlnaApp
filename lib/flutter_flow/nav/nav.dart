@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
 import '/main.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -74,13 +72,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const RegPageWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const FirstPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const RegPageWidget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const FirstPageWidget(),
         ),
         FFRoute(
           name: 'RegPage',
@@ -118,6 +116,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'providerDesc',
               ParamType.String,
             ),
+            providerPic: params.getParam(
+              'providerPic',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -152,14 +154,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'providerDesc',
               ParamType.String,
             ),
+            providerPic: params.getParam(
+              'providerPic',
+              ParamType.String,
+            ),
           ),
-        ),
-        FFRoute(
-          name: 'DirectMessage',
-          path: '/directMessage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'DirectMessage')
-              : const DirectMessageWidget(),
         ),
         FFRoute(
           name: 'reviPage',
@@ -177,34 +176,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const AppointPageWidget(),
         ),
         FFRoute(
-          name: 'chatPage',
-          path: '/chatPage',
-          asyncParams: {
-            'chatUser': getDoc(['users'], UsersRecord.fromSnapshot),
-          },
-          builder: (context, params) => ChatPageWidget(
-            chatUser: params.getParam(
-              'chatUser',
-              ParamType.Document,
-            ),
-            chatRef: params.getParam(
-              'chatRef',
-              ParamType.DocumentReference,
-              false,
-              ['chats'],
-            ),
-            provider: params.getParam(
-              'provider',
-              ParamType.String,
-            ),
-          ),
-        ),
-        FFRoute(
           name: 'PostsPage',
           path: '/postsPage',
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'PostsPage')
               : const PostsPageWidget(),
+        ),
+        FFRoute(
+          name: 'FirstPage',
+          path: '/firstPage',
+          builder: (context, params) => const FirstPageWidget(),
+        ),
+        FFRoute(
+          name: 'chatpage',
+          path: '/chatpage',
+          builder: (context, params) => ChatpageWidget(
+            providerName: params.getParam(
+              'providerName',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -281,7 +272,7 @@ extension _GoRouterStateExtensions on GoRouterState {
       extra != null ? extra as Map<String, dynamic> : {};
   Map<String, dynamic> get allParams => <String, dynamic>{}
     ..addAll(pathParameters)
-    ..addAll(queryParameters)
+    ..addAll(uri.queryParameters)
     ..addAll(extraMap);
   TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
       ? extraMap[kTransitionInfoKey] as TransitionInfo
@@ -374,8 +365,8 @@ class FFRoute {
           }
 
           if (requireAuth && !appStateNotifier.loggedIn) {
-            appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/regPage';
+            appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
+            return '/firstPage';
           }
           return null;
         },
@@ -389,15 +380,11 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
-                    ),
+              ? Container(
+                  color: const Color(0xD4BFD4DA),
+                  child: Image.asset(
+                    'assets/images/IMG_2059-removebg-preview.png',
+                    fit: BoxFit.scaleDown,
                   ),
                 )
               : page;
@@ -453,7 +440,7 @@ class RootPageContext {
   static bool isInactiveRootPage(BuildContext context) {
     final rootPageContext = context.read<RootPageContext?>();
     final isRootPage = rootPageContext?.isRootPage ?? false;
-    final location = GoRouter.of(context).location;
+    final location = GoRouterState.of(context).uri.toString();
     return isRootPage &&
         location != '/' &&
         location != rootPageContext?.errorRoute;

@@ -61,6 +61,11 @@ class UserPostsRecord extends FirestoreRecord {
   String get photoURL => _photoURL ?? '';
   bool hasPhotoURL() => _photoURL != null;
 
+  // "postArea" field.
+  String? _postArea;
+  String get postArea => _postArea ?? '';
+  bool hasPostArea() => _postArea != null;
+
   void _initializeFields() {
     _postTitle = snapshotData['postTitle'] as String?;
     _postDesc = snapshotData['postDesc'] as String?;
@@ -71,6 +76,7 @@ class UserPostsRecord extends FirestoreRecord {
     _posrDate = snapshotData['posrDate'] as DateTime?;
     _userID = snapshotData['UserID'] as String?;
     _photoURL = snapshotData['PhotoURL'] as String?;
+    _postArea = snapshotData['postArea'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -117,6 +123,7 @@ Map<String, dynamic> createUserPostsRecordData({
   DateTime? posrDate,
   String? userID,
   String? photoURL,
+  String? postArea,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -129,6 +136,7 @@ Map<String, dynamic> createUserPostsRecordData({
       'posrDate': posrDate,
       'UserID': userID,
       'PhotoURL': photoURL,
+      'postArea': postArea,
     }.withoutNulls,
   );
 
@@ -148,7 +156,8 @@ class UserPostsRecordDocumentEquality implements Equality<UserPostsRecord> {
         e1?.userName == e2?.userName &&
         e1?.posrDate == e2?.posrDate &&
         e1?.userID == e2?.userID &&
-        e1?.photoURL == e2?.photoURL;
+        e1?.photoURL == e2?.photoURL &&
+        e1?.postArea == e2?.postArea;
   }
 
   @override
@@ -161,7 +170,8 @@ class UserPostsRecordDocumentEquality implements Equality<UserPostsRecord> {
         e?.userName,
         e?.posrDate,
         e?.userID,
-        e?.photoURL
+        e?.photoURL,
+        e?.postArea
       ]);
 
   @override

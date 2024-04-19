@@ -1,9 +1,8 @@
-import '/flutter_flow/chat/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'chat_page_widget.dart' show ChatPageWidget;
+import 'pop_up_order_widget.dart' show PopUpOrderWidget;
 import 'package:flutter/material.dart';
 
-class ChatPageModel extends FlutterFlowModel<ChatPageWidget> {
+class PopUpOrderModel extends FlutterFlowModel<PopUpOrderWidget> {
   @override
   void initState(BuildContext context) {}
 

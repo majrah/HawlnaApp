@@ -55,26 +55,6 @@ class UsersRecord extends FirestoreRecord {
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
-  // "shortDescription" field.
-  String? _shortDescription;
-  String get shortDescription => _shortDescription ?? '';
-  bool hasShortDescription() => _shortDescription != null;
-
-  // "last_active_time" field.
-  DateTime? _lastActiveTime;
-  DateTime? get lastActiveTime => _lastActiveTime;
-  bool hasLastActiveTime() => _lastActiveTime != null;
-
-  // "role" field.
-  String? _role;
-  String get role => _role ?? '';
-  bool hasRole() => _role != null;
-
-  // "title" field.
-  String? _title;
-  String get title => _title ?? '';
-  bool hasTitle() => _title != null;
-
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -84,10 +64,6 @@ class UsersRecord extends FirestoreRecord {
     _password = snapshotData['password'] as String?;
     _confirmPassword = snapshotData['confirmPassword'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
-    _shortDescription = snapshotData['shortDescription'] as String?;
-    _lastActiveTime = snapshotData['last_active_time'] as DateTime?;
-    _role = snapshotData['role'] as String?;
-    _title = snapshotData['title'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -132,10 +108,6 @@ Map<String, dynamic> createUsersRecordData({
   String? password,
   String? confirmPassword,
   DateTime? createdTime,
-  String? shortDescription,
-  DateTime? lastActiveTime,
-  String? role,
-  String? title,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -147,10 +119,6 @@ Map<String, dynamic> createUsersRecordData({
       'password': password,
       'confirmPassword': confirmPassword,
       'created_time': createdTime,
-      'shortDescription': shortDescription,
-      'last_active_time': lastActiveTime,
-      'role': role,
-      'title': title,
     }.withoutNulls,
   );
 
@@ -169,11 +137,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.password == e2?.password &&
         e1?.confirmPassword == e2?.confirmPassword &&
-        e1?.createdTime == e2?.createdTime &&
-        e1?.shortDescription == e2?.shortDescription &&
-        e1?.lastActiveTime == e2?.lastActiveTime &&
-        e1?.role == e2?.role &&
-        e1?.title == e2?.title;
+        e1?.createdTime == e2?.createdTime;
   }
 
   @override
@@ -185,11 +149,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.phoneNumber,
         e?.password,
         e?.confirmPassword,
-        e?.createdTime,
-        e?.shortDescription,
-        e?.lastActiveTime,
-        e?.role,
-        e?.title
+        e?.createdTime
       ]);
 
   @override

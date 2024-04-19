@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -7,8 +8,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/upload_data.dart';
 import 'dart:ui';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'create_post_model.dart';
@@ -25,34 +26,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
     with TickerProviderStateMixin {
   late CreatePostModel _model;
 
-  final animationsMap = {
-    'containerOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-    'containerOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, 70.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void setState(VoidCallback callback) {
@@ -65,12 +39,40 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
     super.initState();
     _model = createModel(context, () => CreatePostModel());
 
-    _model.projectNameController ??= TextEditingController();
+    _model.projectNameTextController ??= TextEditingController();
     _model.projectNameFocusNode ??= FocusNode();
 
-    _model.descriptionController ??= TextEditingController();
+    _model.descriptionTextController ??= TextEditingController();
     _model.descriptionFocusNode ??= FocusNode();
 
+    animationsMap.addAll({
+      'containerOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 200.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'containerOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 250.ms),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 70.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
     setupAnimations(
       animationsMap.values.where((anim) =>
           anim.trigger == AnimationTrigger.onActionTrigger ||
@@ -221,10 +223,100 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                const Icon(
-                                                  Icons.add_a_photo_outlined,
-                                                  color: Color(0xFF57636C),
-                                                  size: 72.0,
+                                                InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    final selectedMedia =
+                                                        await selectMediaWithSourceBottomSheet(
+                                                      context: context,
+                                                      allowPhoto: true,
+                                                    );
+                                                    if (selectedMedia != null &&
+                                                        selectedMedia.every((m) =>
+                                                            validateFileFormat(
+                                                                m.storagePath,
+                                                                context))) {
+                                                      setState(() => _model
+                                                              .isDataUploading =
+                                                          true);
+                                                      var selectedUploadedFiles =
+                                                          <FFUploadedFile>[];
+
+                                                      var downloadUrls =
+                                                          <String>[];
+                                                      try {
+                                                        selectedUploadedFiles =
+                                                            selectedMedia
+                                                                .map((m) =>
+                                                                    FFUploadedFile(
+                                                                      name: m
+                                                                          .storagePath
+                                                                          .split(
+                                                                              '/')
+                                                                          .last,
+                                                                      bytes: m
+                                                                          .bytes,
+                                                                      height: m
+                                                                          .dimensions
+                                                                          ?.height,
+                                                                      width: m
+                                                                          .dimensions
+                                                                          ?.width,
+                                                                      blurHash:
+                                                                          m.blurHash,
+                                                                    ))
+                                                                .toList();
+
+                                                        downloadUrls =
+                                                            (await Future.wait(
+                                                          selectedMedia.map(
+                                                            (m) async =>
+                                                                await uploadData(
+                                                                    m.storagePath,
+                                                                    m.bytes),
+                                                          ),
+                                                        ))
+                                                                .where((u) =>
+                                                                    u != null)
+                                                                .map((u) => u!)
+                                                                .toList();
+                                                      } finally {
+                                                        _model.isDataUploading =
+                                                            false;
+                                                      }
+                                                      if (selectedUploadedFiles
+                                                                  .length ==
+                                                              selectedMedia
+                                                                  .length &&
+                                                          downloadUrls.length ==
+                                                              selectedMedia
+                                                                  .length) {
+                                                        setState(() {
+                                                          _model.uploadedLocalFile =
+                                                              selectedUploadedFiles
+                                                                  .first;
+                                                          _model.uploadedFileUrl =
+                                                              downloadUrls
+                                                                  .first;
+                                                        });
+                                                      } else {
+                                                        setState(() {});
+                                                        return;
+                                                      }
+                                                    }
+                                                  },
+                                                  child: const Icon(
+                                                    Icons.add_a_photo_outlined,
+                                                    color: Color(0xFF57636C),
+                                                    size: 72.0,
+                                                  ),
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsetsDirectional
@@ -274,12 +366,8 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(10.0),
-                                                child: CachedNetworkImage(
-                                                  fadeInDuration: const Duration(
-                                                      milliseconds: 500),
-                                                  fadeOutDuration: const Duration(
-                                                      milliseconds: 500),
-                                                  imageUrl: '',
+                                                child: Image.network(
+                                                  _model.uploadedFileUrl,
                                                   width: double.infinity,
                                                   height: double.infinity,
                                                   fit: BoxFit.cover,
@@ -297,7 +385,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 8.0, 0.0, 0.0),
                                 child: TextFormField(
-                                  controller: _model.projectNameController,
+                                  controller: _model.projectNameTextController,
                                   focusNode: _model.projectNameFocusNode,
                                   autofocus: true,
                                   obscureText: false,
@@ -366,7 +454,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                         fontWeight: FontWeight.normal,
                                       ),
                                   validator: _model
-                                      .projectNameControllerValidator
+                                      .projectNameTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -374,7 +462,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 12.0, 0.0, 12.0),
                                 child: TextFormField(
-                                  controller: _model.descriptionController,
+                                  controller: _model.descriptionTextController,
                                   focusNode: _model.descriptionFocusNode,
                                   autofocus: true,
                                   obscureText: false,
@@ -450,7 +538,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                       ),
                                   maxLines: 5,
                                   validator: _model
-                                      .descriptionControllerValidator
+                                      .descriptionTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -474,16 +562,17 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                     );
                                   }
                                   List<CategoryRecord>
-                                      choiceChipsCategoryRecordList =
+                                      choiceCategoryCategoryRecordList =
                                       snapshot.data!;
                                   return FlutterFlowChoiceChips(
-                                    options: choiceChipsCategoryRecordList
+                                    options: choiceCategoryCategoryRecordList
                                         .map((e) => e.categoryName)
                                         .toList()
                                         .map((label) => ChipData(label))
                                         .toList(),
-                                    onChanged: (val) => setState(() => _model
-                                        .choiceChipsValue = val?.firstOrNull),
+                                    onChanged: (val) => setState(() =>
+                                        _model.choiceCategoryValue =
+                                            val?.firstOrNull),
                                     selectedChipStyle: ChipStyle(
                                       backgroundColor:
                                           FlutterFlowTheme.of(context)
@@ -525,13 +614,99 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                     multiselect: false,
                                     alignment: WrapAlignment.start,
                                     controller:
-                                        _model.choiceChipsValueController ??=
+                                        _model.choiceCategoryValueController ??=
                                             FormFieldController<List<String>>(
                                       [],
                                     ),
                                     wrapped: false,
                                   );
                                 },
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 10.0, 0.0, 0.0),
+                                child: StreamBuilder<List<AreaRecord>>(
+                                  stream: queryAreaRecord(),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    List<AreaRecord> choiceAreaAreaRecordList =
+                                        snapshot.data!;
+                                    return FlutterFlowChoiceChips(
+                                      options: choiceAreaAreaRecordList
+                                          .map((e) => e.aname)
+                                          .toList()
+                                          .map((label) => ChipData(label))
+                                          .toList(),
+                                      onChanged: (val) => setState(() => _model
+                                          .choiceAreaValue = val?.firstOrNull),
+                                      selectedChipStyle: ChipStyle(
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        iconColor: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        iconSize: 18.0,
+                                        elevation: 4.0,
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                      ),
+                                      unselectedChipStyle: ChipStyle(
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .alternate,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        iconColor: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        iconSize: 18.0,
+                                        elevation: 0.0,
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                      ),
+                                      chipSpacing: 12.0,
+                                      rowSpacing: 12.0,
+                                      multiselect: false,
+                                      alignment: WrapAlignment.start,
+                                      controller:
+                                          _model.choiceAreaValueController ??=
+                                              FormFieldController<List<String>>(
+                                        [],
+                                      ),
+                                      wrapped: false,
+                                    );
+                                  },
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
@@ -549,19 +724,24 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                               .doc()
                                               .set(createUserPostsRecordData(
                                                 postTitle: _model
-                                                    .projectNameController.text,
+                                                    .projectNameTextController
+                                                    .text,
                                                 postDesc: _model
-                                                    .descriptionController.text,
+                                                    .descriptionTextController
+                                                    .text,
                                                 postID: getCurrentTimestamp
                                                     .secondsSinceEpoch,
                                                 category:
-                                                    _model.choiceChipsValue,
-                                                photo: '',
+                                                    _model.choiceCategoryValue,
+                                                photo: currentUserPhoto,
                                                 userName:
                                                     currentUserDisplayName,
                                                 posrDate: getCurrentTimestamp,
                                                 userID: currentUserUid,
-                                                photoURL: currentUserPhoto,
+                                                photoURL:
+                                                    _model.uploadedFileUrl,
+                                                postArea:
+                                                    _model.choiceAreaValue,
                                               ));
                                           Navigator.pop(context);
                                         },

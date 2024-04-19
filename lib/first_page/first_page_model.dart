@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'direct_message_widget.dart' show DirectMessageWidget;
+import 'first_page_widget.dart' show FirstPageWidget;
 import 'package:flutter/material.dart';
 
-class DirectMessageModel extends FlutterFlowModel<DirectMessageWidget> {
+class FirstPageModel extends FlutterFlowModel<FirstPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

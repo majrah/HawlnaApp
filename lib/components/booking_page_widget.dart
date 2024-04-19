@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/pop_up_appointment_widget.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -53,7 +54,7 @@ class _BookingPageWidgetState extends State<BookingPageWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: 350.0,
-      height: 616.0,
+      height: 620.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.circular(30.0),
@@ -313,6 +314,21 @@ class _BookingPageWidgetState extends State<BookingPageWidget> {
                               providerName: widget.parameter2,
                               uid: currentUserUid,
                             ));
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: const SizedBox(
+                                height: 200.0,
+                                child: PopUpAppointmentWidget(),
+                              ),
+                            );
+                          },
+                        ).then((value) => safeSetState(() {}));
 
                         context.pushNamed('homePage');
                       },
@@ -320,7 +336,7 @@ class _BookingPageWidgetState extends State<BookingPageWidget> {
                         width: 200.0,
                         height: 50.0,
                         decoration: const BoxDecoration(
-                          color: Color(0xCC3B6B9A),
+                          color: Color(0xFF275977),
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(10.0),
                             bottomRight: Radius.circular(10.0),

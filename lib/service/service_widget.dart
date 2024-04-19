@@ -13,10 +13,12 @@ class ServiceWidget extends StatefulWidget {
     super.key,
     required this.providerName,
     required this.providerDesc,
+    required this.providerPic,
   });
 
   final String? providerName;
   final String? providerDesc;
+  final String? providerPic;
 
   @override
   State<ServiceWidget> createState() => _ServiceWidgetState();
@@ -184,7 +186,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                           borderRadius:
                                               BorderRadius.circular(40.0),
                                           child: Image.network(
-                                            'https://source.unsplash.com/random/1280x720?user&2',
+                                            widget.providerPic!,
                                             width: 44.0,
                                             height: 44.0,
                                             fit: BoxFit.cover,
@@ -282,8 +284,16 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                               ),
                               Expanded(
                                 child: FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
+                                  onPressed: () async {
+                                    context.pushNamed(
+                                      'chatpage',
+                                      queryParameters: {
+                                        'providerName': serializeParam(
+                                          widget.providerName,
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
                                   },
                                   text: 'Direct Message',
                                   options: FFButtonOptions(
@@ -383,9 +393,12 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                                   padding:
                                                       MediaQuery.viewInsetsOf(
                                                           context),
-                                                  child: const BookingPageWidget(
-                                                    parameter1: '',
-                                                    parameter2: '',
+                                                  child: BookingPageWidget(
+                                                    parameter1:
+                                                        listViewServicesRecord
+                                                            .servicesName,
+                                                    parameter2:
+                                                        widget.providerName!,
                                                   ),
                                                 ),
                                               );
@@ -474,6 +487,19 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                                                         .normal,
                                                               ),
                                                         ),
+                                                        Text(
+                                                          listViewServicesRecord
+                                                              .description,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -513,9 +539,15 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                                                                   8.0),
                                                       child: Text(
                                                         valueOrDefault<String>(
-                                                          listViewServicesRecord
-                                                              .price
-                                                              .toString(),
+                                                          formatNumber(
+                                                            listViewServicesRecord
+                                                                .price,
+                                                            formatType:
+                                                                FormatType
+                                                                    .custom,
+                                                            format: 'avg/AED ',
+                                                            locale: '',
+                                                          ),
                                                           'price',
                                                         ),
                                                         textAlign:

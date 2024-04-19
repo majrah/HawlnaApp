@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -99,7 +100,14 @@ class _AppointPageWidgetState extends State<AppointPageWidget>
                 controller: _model.tabBarController,
                 children: [
                   StreamBuilder<List<BookServiceRecord>>(
-                    stream: queryBookServiceRecord(),
+                    stream: queryBookServiceRecord(
+                      queryBuilder: (bookServiceRecord) => bookServiceRecord
+                          .where(
+                            'uid',
+                            isEqualTo: currentUserUid,
+                          )
+                          .orderBy('BookDate', descending: true),
+                    ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
@@ -177,14 +185,14 @@ class _AppointPageWidgetState extends State<AppointPageWidget>
                                             Text(
                                               listViewBookServiceRecord
                                                   .providerName,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    color: const Color(0xCC3B6B9A),
+                                                    letterSpacing: 0.0,
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -218,14 +226,14 @@ class _AppointPageWidgetState extends State<AppointPageWidget>
                                                         .bookDate),
                                                 '1',
                                               ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    color: const Color(0xCC3B6B9A),
+                                                    letterSpacing: 0.0,
+                                                  ),
                                             ),
                                             Text(
                                               'Time:',
@@ -243,14 +251,14 @@ class _AppointPageWidgetState extends State<AppointPageWidget>
                                             Text(
                                               listViewBookServiceRecord
                                                   .bookTime,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    color: const Color(0xCC3B6B9A),
+                                                    letterSpacing: 0.0,
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -295,7 +303,7 @@ class _AppointPageWidgetState extends State<AppointPageWidget>
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
                                                           color:
-                                                              const Color(0xFF57636C),
+                                                              const Color(0xCC3B6B9A),
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -317,7 +325,12 @@ class _AppointPageWidgetState extends State<AppointPageWidget>
                     },
                   ),
                   StreamBuilder<List<CartRecord>>(
-                    stream: queryCartRecord(),
+                    stream: queryCartRecord(
+                      queryBuilder: (cartRecord) => cartRecord.where(
+                        'user',
+                        isEqualTo: currentUserUid,
+                      ),
+                    ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
@@ -394,14 +407,14 @@ class _AppointPageWidgetState extends State<AppointPageWidget>
                                             Text(
                                               listViewCartRecord.cartID
                                                   .toString(),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    color: const Color(0xCC3B6B9A),
+                                                    letterSpacing: 0.0,
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -432,14 +445,14 @@ class _AppointPageWidgetState extends State<AppointPageWidget>
                                                 listViewCartRecord.providerRef,
                                                 'Provider',
                                               ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    color: const Color(0xCC3B6B9A),
+                                                    letterSpacing: 0.0,
+                                                  ),
                                             ),
                                             Text(
                                               'Total:',
@@ -457,14 +470,14 @@ class _AppointPageWidgetState extends State<AppointPageWidget>
                                             Text(
                                               listViewCartRecord.total
                                                   .toString(),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    color: const Color(0xCC3B6B9A),
+                                                    letterSpacing: 0.0,
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -509,7 +522,7 @@ class _AppointPageWidgetState extends State<AppointPageWidget>
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
                                                           color:
-                                                              const Color(0xFF57636C),
+                                                              const Color(0xCC3B6B9A),
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:

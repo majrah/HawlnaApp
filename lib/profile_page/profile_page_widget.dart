@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/components/edit_profile_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -69,13 +70,15 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50.0),
-                              child: Image.network(
-                                'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-                                width: 100.0,
-                                height: 100.0,
-                                fit: BoxFit.cover,
+                            child: AuthUserStreamWidget(
+                              builder: (context) => ClipRRect(
+                                borderRadius: BorderRadius.circular(50.0),
+                                child: Image.network(
+                                  currentUserPhoto,
+                                  width: 100.0,
+                                  height: 100.0,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
@@ -175,253 +178,6 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 16.0, 8.0),
-                                      child: Icon(
-                                        Icons.work_outline,
-                                        color: Color(0xFF57636C),
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 12.0, 0.0),
-                                        child: Text(
-                                          'Phone Number',
-                                          textAlign: TextAlign.start,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF101213),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      'Add Number',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: const Color(0xFF4B39EF),
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 16.0, 8.0),
-                                      child: Icon(
-                                        Icons.language_rounded,
-                                        color: Color(0xFF57636C),
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 12.0, 0.0),
-                                        child: Text(
-                                          'Language',
-                                          textAlign: TextAlign.start,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF101213),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      'English (eng)',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: const Color(0xFF4B39EF),
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 16.0, 8.0),
-                                      child: Icon(
-                                        Icons.money_rounded,
-                                        color: Color(0xFF57636C),
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 12.0, 0.0),
-                                        child: Text(
-                                          'Currency',
-                                          textAlign: TextAlign.start,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF101213),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      'US Dollar (\$)',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: const Color(0xFF4B39EF),
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 16.0, 8.0),
-                                      child: Icon(
-                                        Icons.edit,
-                                        color: Color(0xFF57636C),
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 12.0, 0.0),
-                                        child: Text(
-                                          'Profile Settings',
-                                          textAlign: TextAlign.start,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF101213),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      'Edit Profile',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: const Color(0xFF4B39EF),
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 16.0, 8.0),
-                                      child: Icon(
-                                        Icons.notifications_active,
-                                        color: Color(0xFF57636C),
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 12.0, 0.0),
-                                        child: Text(
-                                          'Notification Settings',
-                                          textAlign: TextAlign.start,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF101213),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                    const Icon(
-                                      Icons.chevron_right_rounded,
-                                      color: Color(0xFF57636C),
-                                      size: 24.0,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
@@ -434,7 +190,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                         .clearRedirectLocation();
 
                                     context.goNamedAuth(
-                                        'RegPage', context.mounted);
+                                        'FirstPage', context.mounted);
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -490,6 +246,76 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w500,
                                               ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 8.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      enableDrag: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () => _model
+                                                  .unfocusNode.canRequestFocus
+                                              ? FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _model.unfocusNode)
+                                              : FocusScope.of(context)
+                                                  .unfocus(),
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: const EditProfileWidget(),
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(() {}));
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 8.0, 16.0, 8.0),
+                                        child: Icon(
+                                          Icons.edit,
+                                          color: Color(0xFF57636C),
+                                          size: 24.0,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 12.0, 0.0),
+                                          child: Text(
+                                            'Edit Your Profile',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily:
+                                                      'Plus Jakarta Sans',
+                                                  color: const Color(0xFF101213),
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ),
                                         ),
                                       ),
                                     ],

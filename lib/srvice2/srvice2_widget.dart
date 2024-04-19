@@ -12,10 +12,12 @@ class Srvice2Widget extends StatefulWidget {
     super.key,
     required this.providerRef,
     required this.providerDesc,
+    required this.providerPic,
   });
 
   final String? providerRef;
   final String? providerDesc;
+  final String? providerPic;
 
   @override
   State<Srvice2Widget> createState() => _Srvice2WidgetState();
@@ -213,7 +215,7 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                           borderRadius:
                                               BorderRadius.circular(40.0),
                                           child: Image.network(
-                                            'https://source.unsplash.com/random/1280x720?user&2',
+                                            widget.providerPic!,
                                             width: 44.0,
                                             height: 44.0,
                                             fit: BoxFit.cover,
@@ -313,14 +315,10 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     context.pushNamed(
-                                      'service',
+                                      'chatpage',
                                       queryParameters: {
                                         'providerName': serializeParam(
-                                          '',
-                                          ParamType.String,
-                                        ),
-                                        'providerDesc': serializeParam(
-                                          '',
+                                          widget.providerRef,
                                           ParamType.String,
                                         ),
                                       }.withoutNulls,
@@ -474,6 +472,20 @@ class _Srvice2WidgetState extends State<Srvice2Widget> {
                                                                   FontWeight
                                                                       .normal,
                                                             ),
+                                                      ),
+                                                      Text(
+                                                        listViewServicesRecord
+                                                            .description,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                       ),
                                                     ],
                                                   ),

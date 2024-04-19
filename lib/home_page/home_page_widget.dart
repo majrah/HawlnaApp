@@ -65,13 +65,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50.0),
-                  child: Image.network(
-                    'https://picsum.photos/seed/626/600',
-                    width: 300.0,
-                    height: 200.0,
-                    fit: BoxFit.cover,
+                child: AuthUserStreamWidget(
+                  builder: (context) => ClipRRect(
+                    borderRadius: BorderRadius.circular(50.0),
+                    child: Image.network(
+                      currentUserPhoto,
+                      width: 300.0,
+                      height: 200.0,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
@@ -367,6 +369,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     .description,
                                                 ParamType.String,
                                               ),
+                                              'providerPic': serializeParam(
+                                                listViewServiceProviderRecord
+                                                    .img,
+                                                ParamType.String,
+                                              ),
                                             }.withoutNulls,
                                           );
                                         } else {
@@ -381,6 +388,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               'providerDesc': serializeParam(
                                                 listViewServiceProviderRecord
                                                     .description,
+                                                ParamType.String,
+                                              ),
+                                              'providerPic': serializeParam(
+                                                listViewServiceProviderRecord
+                                                    .img,
                                                 ParamType.String,
                                               ),
                                             }.withoutNulls,
@@ -636,6 +648,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 serchResultItem.description,
                                                 ParamType.String,
                                               ),
+                                              'providerPic': serializeParam(
+                                                serchResultItem.img,
+                                                ParamType.String,
+                                              ),
                                             }.withoutNulls,
                                           );
                                         } else {
@@ -648,6 +664,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               ),
                                               'providerDesc': serializeParam(
                                                 serchResultItem.description,
+                                                ParamType.String,
+                                              ),
+                                              'providerPic': serializeParam(
+                                                serchResultItem.img,
                                                 ParamType.String,
                                               ),
                                             }.withoutNulls,
